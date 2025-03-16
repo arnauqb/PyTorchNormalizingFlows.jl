@@ -12,6 +12,8 @@ This allows for the normalizing flows to be used directly with [AdvancedVI.jl](h
 ] add PyTorchNormalizingFlows
 ```
 
+You need to have the `normflows` and `torch` Python packages installed. If `PyCall` can't find the `normflows` package, see the [PyCall](https://github.com/JuliaPy/PyCall.jl) repository for more details on how to set up the Python environment for Julia.
+
 ## Usage
 
 ```julia
