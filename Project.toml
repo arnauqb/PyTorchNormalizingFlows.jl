@@ -1,13 +1,33 @@
 name = "PyTorchNormalizingFlows"
 uuid = "b1ce68fd-cc19-4df3-b5ec-a7d53c0ea107"
 authors = ["Arnau Quera-Bofarull"]
-version = "1.0.0-DEV"
+version = "1.0.0"
+
+[deps]
+Bijectors = "76274a88-744f-5084-9051-94815aaf08c4"
+ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+DynamicPPL = "366bfd00-2699-11ea-058f-f148b4cae6d8"
+Functors = "d9f16b24-f501-4c13-a1f2-28368ffc5196"
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
+Bijectors = "0.15.5"
+ChainRulesCore = "1.25.1"
+Distributions = "0.25.118"
+DynamicPPL = "0.35.0"
+Functors = "0.5.2"
+PyCall = "1.96.4"
+Random = "1.11.0"
 julia = "1.6.7"
 
 [extras]
+AdvancedVI = "b5ca4192-6429-45e5-a2d9-87aec30a685c"
+ADTypes = "47edcb42-4c32-4615-8424-f2b9edc5f35b"
+Optimisers = "3bd65402-5787-11e9-1adc-39752487f4e2"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
 
 [targets]
-test = ["Test"]
+test = ["Test", "AdvancedVI", "ADTypes", "Optimisers", "Zygote"]

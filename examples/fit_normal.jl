@@ -1,20 +1,3 @@
-# PyTorchNormalizingFlows
-
-[![Build Status](https://github.com/arnauqb/PyTorchNormalizingFlows.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/arnauqb/PyTorchNormalizingFlows.jl/actions/workflows/CI.yml?query=branch%3Amain)
-
-This package provides a Julia interface to the [Normalizing Flows](https://github.com/VincentStimper/normalizing-flows) library of PyTorch. It implements custom rules for the Zygote AD backend to allow for flow.
-
-This allows for the normalizing flows to be used directly with [AdvancedVI.jl](https://github.com/TuringLang/AdvancedVI.jl) for variational inference.
-
-## Installation
-
-```julia
-] add PyTorchNormalizingFlows
-```
-
-## Usage
-
-```julia
 using AdvancedVI
 using ADTypes
 using Bijectors
@@ -22,7 +5,6 @@ using DynamicPPL
 using Distributions
 using Optimisers
 using PyTorchNormalizingFlows
-using Test
 using CairoMakie, PairPlots
 using Zygote
 
@@ -33,6 +15,7 @@ using Zygote
 end
 
 ## setup true data
+Random.seed!(1234);
 true_mu = 0.5;
 true_sigma = 2.0;
 data = rand(Normal(true_mu, true_sigma), 100);
@@ -69,24 +52,16 @@ lines!(ax, elbo_values, label="ELBO", alpha=0.5, color=:blue)
 lines!(ax, rolling_mean, label="Rolling mean (n=$window_size)", linewidth=2, color=:blue)
 axislegend(ax, position=:rb)
 f
+save("elbo.png", f)
 
 ##
 samples = rand(q, 1000)
 samples_untrained = rand(flow_untrained, 1000)
 table = (; mu=samples[1, :], sigma=samples[2, :])
 table_untrained = (; mu=samples_untrained[1, :], sigma=samples_untrained[2, :])
-pairplot(
+f = pairplot(
     PairPlots.Series(table, label="VI"),
     PairPlots.Series(table_untrained, label="Untrained"),
     PairPlots.Truth((; mu=true_mu, sigma=true_sigma)),
 )
-```
-
-![ELBO](elbo.png)
-![Pairplot](pairplot.png)
-
-# TODO
-
-- Add more flow examples.
-- GPU support.
-- Enzyme support.
+save("pairplot.png", f)
